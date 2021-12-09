@@ -124,4 +124,4 @@ VOLUME ["/opt/graphite/conf", "/opt/graphite/storage", "/opt/graphite/webapp/gra
 
 STOPSIGNAL SIGHUP
 
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["sh","entrypoint"]
