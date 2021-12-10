@@ -126,7 +126,7 @@ UTF8_METRICS = os.environ.get('GRAPHITE_UTF8_METRICS', 'false').lower() in ['1',
 # NOTE: If any directory is unreadable in STANDARD_DIRS it will break metric browsing
 #
 #CERES_DIR = '/opt/graphite/storage/ceres'
-#WHISPER_DIR = '/opt/graphite/storage/whisper'
+WHISPER_DIR = '/opt/graphite/bad/directory/storage/whisper'
 #RRD_DIR = '/opt/graphite/storage/rrd'
 #
 # Data directories using the "Standard" metrics finder (i.e. not Ceres)
@@ -138,9 +138,9 @@ UTF8_METRICS = os.environ.get('GRAPHITE_UTF8_METRICS', 'false').lower() in ['1',
 # See: http://graphite.readthedocs.io/en/latest/storage-backends.html
 #
 # STORAGE_FINDERS = (
-#    'graphite.finders.remote.RemoteFinder',
-#    'graphite.finders.standard.StandardFinder',
-#    'graphite.finders.ceres.CeresFinder',
+#     'graphite.finders.remote.RemoteFinder',
+#     'graphite.finders.standard.StandardFinder',
+#     'graphite.finders.ceres.CeresFinder',
 # )
 
 #####################################
@@ -270,8 +270,8 @@ UTF8_METRICS = os.environ.get('GRAPHITE_UTF8_METRICS', 'false').lower() in ['1',
 # remote server in the cluster. These servers must each have local access to
 # metric data. Note that the first server to return a match for a query will be
 # used.
-#CLUSTER_SERVERS = ["10.0.2.2:80", "10.0.2.3:80"]
-CLUSTER_SERVERS = [x for x in [host.strip() for host in os.environ.get('GRAPHITE_CLUSTER_SERVERS', '').split(",")] if x]
+CLUSTER_SERVERS = ["host.docker.internal:8080",]
+#CLUSTER_SERVERS = [x for x in [host.strip() for host in os.environ.get('GRAPHITE_CLUSTER_SERVERS', '').split(",")] if x]
 
 # Creates a pool of worker threads to which tasks can be dispatched. This makes
 # sense if there are multiple CLUSTER_SERVERS because then the communication
@@ -363,9 +363,9 @@ REMOTE_PREFETCH_DATA = os.environ.get("GRAPHITE_REMOTE_PREFETCH_DATA", "false").
 # You *should* use 127.0.0.1 here in most cases.
 #
 #CARBONLINK_HOSTS = ["127.0.0.1:7002:a", "127.0.0.1:7102:b", "127.0.0.1:7202:c"]
-CARBONLINK_HOSTS = [host.strip() for host in os.environ.get('GRAPHITE_CARBONLINK_HOSTS', "127.0.0.1:7002").split(",")]
+#CARBONLINK_HOSTS = [host.strip() for host in os.environ.get('GRAPHITE_CARBONLINK_HOSTS', "127.0.0.1:7002").split(",")]
 
-CARBONLINK_TIMEOUT = float(os.environ.get('GRAPHITE_CARBONLINK_TIMEOUT', '1'))
+#CARBONLINK_TIMEOUT = float(os.environ.get('GRAPHITE_CARBONLINK_TIMEOUT', '1'))
 #CARBONLINK_RETRY_DELAY = 15 # Seconds to blacklist a failed remote server
 #
 
@@ -377,7 +377,7 @@ CARBONLINK_TIMEOUT = float(os.environ.get('GRAPHITE_CARBONLINK_TIMEOUT', '1'))
 #
 # Supported values: carbon_ch, fnv1a_ch
 #
-CARBONLINK_HASHING_TYPE = os.environ.get("GRAPHITE_CARBONLINK_HASHING_TYPE", 'carbon_ch')
+#CARBONLINK_HASHING_TYPE = os.environ.get("GRAPHITE_CARBONLINK_HASHING_TYPE", 'carbon_ch')
 
 # A "keyfunc" is a user-defined python function that is given a metric name
 # and returns a string that should be used when hashing the metric name.
@@ -389,7 +389,7 @@ CARBONLINK_HASHING_TYPE = os.environ.get("GRAPHITE_CARBONLINK_HASHING_TYPE", 'ca
 
 # The replication factor to use with consistent hashing.
 # This should usually match the value configured in Carbon.
-REPLICATION_FACTOR = int(os.environ.get('GRAPHITE_REPLICATION_FACTOR', '1'))
+#REPLICATION_FACTOR = int(os.environ.get('GRAPHITE_REPLICATION_FACTOR', '1'))
 
 #####################################
 # TagDB Settings #
@@ -397,29 +397,29 @@ REPLICATION_FACTOR = int(os.environ.get('GRAPHITE_REPLICATION_FACTOR', '1'))
 # Tag Database
 
 # set TAGDB to Redis if REDIS_TAGDB env var is set
-_REDIS_TAGDB = os.environ.get('REDIS_TAGDB', 'false').lower() in ['1', 'true', 'yes']
+#_REDIS_TAGDB = os.environ.get('REDIS_TAGDB', 'false').lower() in ['1', 'true', 'yes']
 
 # default TAGDB is local database. Set to '' to disable
-TAGDB = 'graphite.tags.redis.RedisTagDB' if _REDIS_TAGDB else \
-    os.environ.get('GRAPHITE_TAGDB', 'graphite.tags.localdatabase.LocalDatabaseTagDB')
+#TAGDB = 'graphite.tags.redis.RedisTagDB' if _REDIS_TAGDB else \
+#    os.environ.get('GRAPHITE_TAGDB', 'graphite.tags.localdatabase.LocalDatabaseTagDB')
 
 # Time to cache seriesByTag results
-TAGDB_CACHE_DURATION = int(os.environ.get('GRAPHITE_TAGDB_CACHE_DURATION') or 60)
+#TAGDB_CACHE_DURATION = int(os.environ.get('GRAPHITE_TAGDB_CACHE_DURATION') or 60)
 
 # Autocomplete default result limit
-TAGDB_AUTOCOMPLETE_LIMIT = int(os.environ.get('GRAPHITE_TAGDB_AUTOCOMPLETE_LIMIT') or 100)
+#TAGDB_AUTOCOMPLETE_LIMIT = int(os.environ.get('GRAPHITE_TAGDB_AUTOCOMPLETE_LIMIT') or 100)
 
 # Settings for Redis TagDB
-TAGDB_REDIS_HOST = os.environ.get('GRAPHITE_TAGDB_REDIS_HOST', 'localhost')
-TAGDB_REDIS_PORT = int(os.environ.get('GRAPHITE_TAGDB_REDIS_PORT') or 6379)
-TAGDB_REDIS_DB = int(os.environ.get('GRAPHITE_TAGDB_REDIS_DB') or 0)
+#TAGDB_REDIS_HOST = os.environ.get('GRAPHITE_TAGDB_REDIS_HOST', 'localhost')
+#TAGDB_REDIS_PORT = int(os.environ.get('GRAPHITE_TAGDB_REDIS_PORT') or 6379)
+#TAGDB_REDIS_DB = int(os.environ.get('GRAPHITE_TAGDB_REDIS_DB') or 0)
 
 # Settings for HTTP TagDB
-TAGDB_HTTP_URL = os.environ.get('GRAPHITE_TAGDB_HTTP_URL', '')
-TAGDB_HTTP_USER = os.environ.get('GRAPHITE_TAGDB_HTTP_USER', '')
-TAGDB_HTTP_PASSWORD = os.environ.get('GRAPHITE_TAGDB_HTTP_PASSWORD', '')
+#TAGDB_HTTP_URL = os.environ.get('GRAPHITE_TAGDB_HTTP_URL', '')
+#TAGDB_HTTP_USER = os.environ.get('GRAPHITE_TAGDB_HTTP_USER', '')
+#TAGDB_HTTP_PASSWORD = os.environ.get('GRAPHITE_TAGDB_HTTP_PASSWORD', '')
 # Does the remote TagDB support autocomplete?
-TAGDB_HTTP_AUTOCOMPLETE = os.environ.get('GRAPHITE_TAGDB_HTTP_AUTOCOMPLETE', 'false').lower() in ['1', 'true', 'yes']
+#TAGDB_HTTP_AUTOCOMPLETE = os.environ.get('GRAPHITE_TAGDB_HTTP_AUTOCOMPLETE', 'false').lower() in ['1', 'true', 'yes']
 
 #####################################
 # Function plugins #
@@ -436,22 +436,22 @@ LOG_DIR = '/var/log/graphite'
 _SECRET_KEY = '$(date +%s | sha256sum | base64 | head -c 64)'
 SECRET_KEY = os.environ.get('GRAPHITE_SECRET_KEY', _SECRET_KEY)
 
-if (os.getenv("MEMCACHE_HOST") is not None):
-    MEMCACHE_HOSTS = os.getenv("MEMCACHE_HOST").split(",")
+#if (os.getenv("MEMCACHE_HOST") is not None):
+#    MEMCACHE_HOSTS = os.getenv("MEMCACHE_HOST").split(",")
 
-if (os.getenv("DEFAULT_CACHE_DURATION") is not None):
-    DEFAULT_CACHE_DURATION = int(os.getenv("CACHE_DURATION"))
+#if (os.getenv("DEFAULT_CACHE_DURATION") is not None):
+#    DEFAULT_CACHE_DURATION = int(os.getenv("CACHE_DURATION"))
 
-STATSD_HOST = os.environ.get('GRAPHITE_STATSD_HOST', '127.0.0.1')
-if STATSD_HOST != '':
-    from graphite.app_settings import *
-    MIDDLEWARE = (
-        'django_statsd.middleware.GraphiteRequestTimingMiddleware',
-        'django_statsd.middleware.GraphiteMiddleware',
-        ) + MIDDLEWARE
-    try:
-        MIDDLEWARE_CLASSES
-    except NameError:
-        pass
-    else:
-        MIDDLEWARE_CLASSES = MIDDLEWARE
+#STATSD_HOST = os.environ.get('GRAPHITE_STATSD_HOST', '127.0.0.1')
+# if STATSD_HOST != '':
+#     from graphite.app_settings import *
+#     MIDDLEWARE = (
+#         'django_statsd.middleware.GraphiteRequestTimingMiddleware',
+#         'django_statsd.middleware.GraphiteMiddleware',
+#         ) + MIDDLEWARE
+#     try:
+#         MIDDLEWARE_CLASSES
+#     except NameError:
+#         pass
+#     else:
+#         MIDDLEWARE_CLASSES = MIDDLEWARE

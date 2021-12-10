@@ -1,9 +1,0 @@
-#!/bin/sh
-
-[[ -n "${RELAY}" ]] || exit 1
-
-[[ -f "./down" ]] && exit 1
-
-BIN=/opt/graphite/bin/python3
-[[ -f "/opt/graphite/bin/pypy3" ]] && BIN=/opt/graphite/bin/pypy3
-exec ${BIN} /opt/graphite/bin/carbon-relay.py start --debug 2>&1
